@@ -7,10 +7,6 @@ using MH.Api.Authentication;
 using MH.Domain.DBModel;
 using MH.Domain.Model;
 using AutoMapper;
-using MH.Application.IService.External;
-using MH.Application.Service.External;
-using MH.Domain.Settings;
-using MH.Domain.External;
 
 namespace MH.Api.Controllers
 {
@@ -21,8 +17,6 @@ namespace MH.Api.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<Domain.DBModel.Role> _roleManager;
-        private readonly FacebookAuthSetting _facebookAuthSetting;
-        private readonly GoogleAuthSetting _googleAuthSetting;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IOtpService _otpService;
         private readonly IConfiguration _configuration;
@@ -37,9 +31,7 @@ namespace MH.Api.Controllers
             IOtpService otpService,
             IConfiguration configuration,
             IMapper mapper,
-            FacebookAuthSetting facebookAuthSetting,
-            IHttpClientFactory httpClientFactory,
-            GoogleAuthSetting googleAuthSetting)
+            IHttpClientFactory httpClientFactory)
         {
             _jwtExt = jwtExt;
             _userManager = userManager;
@@ -48,9 +40,7 @@ namespace MH.Api.Controllers
             _otpService = otpService;
             _configuration = configuration;
             _mapper = mapper;
-            _facebookAuthSetting = facebookAuthSetting;
             _httpClientFactory = httpClientFactory;
-            _googleAuthSetting = googleAuthSetting;
         }
 
         [HttpPost]
@@ -84,43 +74,6 @@ namespace MH.Api.Controllers
 
             return Ok(user);
         }
-
-        [HttpPost]
-        [Route("ExternalAuth")]
-        public async Task<IActionResult> ExternalAuth([FromBody] ExternalAuthModel authModel)
-        {
-            var userInfo = new FacebookUserInfoResult();
-            var externalService = FactoryMethod(authModel.Provider);
-            var validationResult = await externalService.ValidateAccessToken<TokenValidationResult>(authModel.AccessToken);
-            if(validationResult.Data.IsValid)
-            {
-                userInfo = await externalService.GetUserInfoResult<FacebookUserInfoResult>(authModel.AccessToken);
-                var existingUser = await GetLoginResult(userInfo.Email);
-                if(existingUser != null)
-                {
-                    return Ok(existingUser);
-                }
-                else
-                {
-                    var newUser = new ApplicationUser()
-                    {
-                        FullName = userInfo.FirstName +" "+userInfo.LastName,
-                        Email = userInfo.Email,
-                        UserName = userInfo.Email,
-                        PasswordHash = "Pass@123",
-                        Status = 1
-                    };
-                    await CreateNewUser(newUser);
-                    var loginUser =  await GetLoginResult(userInfo.Email);
-                    if(loginUser != null)
-                    {
-                        return Ok(loginUser);
-                    }
-                }
-            }
-            return BadRequest();
-        }
-
         private async Task<LoginResponse?> GetLoginResult(string email)
         {
             var existingUser = await _userManager.FindByEmailAsync(email);
@@ -151,16 +104,5 @@ namespace MH.Api.Controllers
             }
             await _userManager.AddToRoleAsync(user, RoleEnum.Subscriber.ToString());
         }
-
-        private IExternalAuthService FactoryMethod(string type)
-        {
-            return type switch
-            {
-                "Facebook" => new FaceBookAuthService(_httpClientFactory, _facebookAuthSetting),
-                //"Google" => new GoogleAuthService(_httpClientFactory, _googleAuthSetting),
-                _ => throw new ArgumentException("Invalid Provider", "type"),
-            };
-        }
-
     }
 }

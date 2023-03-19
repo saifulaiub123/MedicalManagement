@@ -12,9 +12,6 @@ namespace MH.Domain.Mapping
         {
             CreateMap<UserProfile,UserProfileModel>().ReverseMap();
             CreateMap<UserProfile, UserProfileViewModel>()
-                .ForMember(a => a.CountryName, b => b.MapFrom(b => b.Country.Name))
-                .ForMember(a => a.StateName, b => b.MapFrom(b => b.State.Name))
-                .ForMember(a => a.CityName, b => b.MapFrom(b => b.City.Name))
                 .ForMember(a => a.ProfileImage, b => b.MapFrom(b => System.Convert.ToBase64String(b.User.UserProfileImage.Data)))
                 .ReverseMap();
         }

@@ -19,11 +19,6 @@ namespace MH.Domain.DBModel
         public int LanguageId { get; set; }
         public bool IsDeleted { get; set; }
 
-
-        public virtual Country Country { get; set; }
-        public virtual State State { get; set; }
-        public virtual City City { get; set; }
-
         public virtual ApplicationUser User { get; set; }
 
         public virtual ApplicationUser CreatedByUser { get; set; }

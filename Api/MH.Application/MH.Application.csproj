@@ -20,4 +20,9 @@
     <ProjectReference Include="..\MH.Infrastructure\MH.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helper\" />
+    <Folder Include="IHelper\" />
+  </ItemGroup>
+
 </Project>

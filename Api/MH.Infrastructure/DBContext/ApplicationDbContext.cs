@@ -21,11 +21,6 @@ namespace MH.Infrastructure.DBContext
         public DbSet<Otp> Otps { get; set; }
         public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Permission> Permission { get; set; }
-        public DbSet<Server> Server { get; set; }
-        public DbSet<ScriptUserPermission> ScriptUserPermission { get; set; }
-        public DbSet<Country> Country { get; set; }
-        public DbSet<State> State { get; set; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

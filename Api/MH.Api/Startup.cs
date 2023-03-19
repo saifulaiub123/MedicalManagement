@@ -12,17 +12,9 @@ using MH.Domain.Mapping;
 using MH.Infrastructure.Dependency;
 using MH.Infrastructure.DBContext;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Hangfire;
-using MH.Domain.Settings;
-using Hangfire.Dashboard;
-using MH.Api.Filter;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.CookiePolicy;
-using Microsoft.AspNetCore.Authentication.Facebook;
-using System.Configuration;
 using MH.Api.Dependency.Setting;
 
 namespace MH.Api
@@ -59,37 +51,14 @@ namespace MH.Api
                 options => options.UseSqlServer(Configuration.GetConnectionString(ConfigOptions.DbConnName),
                             options => options.EnableRetryOnFailure())
                 );
-            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString(ConfigOptions.DbConnName)));
-            services.AddHangfireServer();
-
+            
             services.AddServices();
             services.AddRepositories();
             services.ApplicationServices();
             services.TokenAuthentication(Configuration);
-
-            //Appsettings Bind to Singleton Class
-            services.AddFacebookAuthSettingService(Configuration);
-            services.AddGoogleAuthSettingService(Configuration);
             services.AddMailSettingService(Configuration);
 
-            
-
             services.AddAutoMapper(typeof(ApplicationUserMapping).Assembly);
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-
-            //    // prevent access from javascript 
-            //    options.HttpOnly = HttpOnlyPolicy.Always;
-
-            //    // If the URI that provides the cookie is HTTPS, 
-            //    // cookie will be sent ONLY for HTTPS requests 
-            //    // (refer mozilla docs for details) 
-            //    options.Secure = CookieSecurePolicy.SameAsRequest;
-
-            //    // refer "SameSite cookies" on mozilla website 
-            //    options.MinimumSameSitePolicy = SameSiteMode.None;
-
-            //});
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>
@@ -142,16 +111,6 @@ namespace MH.Api
             app.UseSwagger();
             app.UseSwaggerUI();
 
-            var hangFireDashboardOptions = new DashboardOptions
-            {
-                DashboardTitle = "Scheduler",
-                AppPath = null,
-                //Authorization = new IDashboardAuthorizationFilter[]
-                //{
-                //    new HangfireAuthorizationFilter("Admin")
-                //}
-            };
-            app.UseHangfireDashboard("/job/hangfire", hangFireDashboardOptions);
             app.UseRouting();
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseCors();
