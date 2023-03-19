@@ -16,7 +16,6 @@ using Z.EntityFramework.Plus;
 namespace MH.Api.Controllers
 {
     [Authorize]
-    [ApiExplorerSettings(IgnoreApi = true)]
     public class UserController : BaseController
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -55,17 +54,7 @@ namespace MH.Api.Controllers
             var users = await _userManager.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role).Where(x => x.Status == 1).ToListAsync();
             return Ok(users);
         }
-        [HttpGet]
-        [Route("GetShareableUsers")]
-        public async Task<IActionResult> GetShareableUsers()
-        {
-            var users = await _userManager.Users
-                .Where(x => x.UserRoles.Any(y => y.RoleId != (int)RoleEnum.Admin))
-                .Where(x => x.Id != _currentUser.User.Id)
-                .ToListAsync();
-            var result = _mapper.Map<List<UserViewModel>>(users);
-            return Ok(result);
-        }
+        
         [HttpGet]
         [Route("GetUserById")]
         public async Task<IActionResult> GetUserById(int id)
@@ -75,6 +64,7 @@ namespace MH.Api.Controllers
         }
         [HttpPatch]
         [Route("UpdateUser")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> UpdateUser(UserModel user)
         {
             await _userService.UpdateUser(user);
@@ -82,6 +72,7 @@ namespace MH.Api.Controllers
         }
         [HttpDelete]
         [Route("Delete")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> Delete(int id)
         {
             await _userService.Delete(id);
@@ -89,6 +80,7 @@ namespace MH.Api.Controllers
         }
         [HttpPatch]
         [Route("ChangePassword")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
         {
             var user = await _userManager.FindByIdAsync(_currentUser.User.Id.ToString());
@@ -97,6 +89,7 @@ namespace MH.Api.Controllers
         }
         [HttpPatch]
         [Route("ResetPassword")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
         {
             var user = await _userManager.FindByIdAsync(_currentUser.User.Id.ToString());
@@ -112,7 +105,7 @@ namespace MH.Api.Controllers
                 var errors = result.Errors.Select(x => x.Description).ToList();
                 throw new Exception(errors.ToString());
             }
-            await _userManager.AddToRoleAsync(user, RoleEnum.Subscriber.ToString());
+            await _userManager.AddToRoleAsync(user, RoleEnum.Doctor.ToString());
         }
     }
 }

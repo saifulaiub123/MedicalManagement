@@ -6,7 +6,7 @@ using MH.Domain.Model;
 
 namespace MH.Api.Controllers
 {
-    [Authorize]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class UserProfileImageController : BaseController
     {
         private readonly IUserProfileImageService _userProfileImageService;

@@ -9,6 +9,7 @@ using MH.Domain.ViewModel;
 namespace MH.Api.Controllers
 {
     [Authorize]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class UserProfileController : BaseController
     {
         private readonly IUserProfileService _userProfileService;

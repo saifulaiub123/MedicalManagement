@@ -102,7 +102,7 @@ namespace MH.Api.Controllers
                 var errors = result.Errors.Select(x => x.Description).ToList();
                 throw new Exception(errors.ToString());
             }
-            await _userManager.AddToRoleAsync(user, RoleEnum.Subscriber.ToString());
+            await _userManager.AddToRoleAsync(user, RoleEnum.Doctor.ToString());
         }
     }
 }

@@ -32,9 +32,9 @@ begin
 INSERT INTO [dbo].[AspNetRoles]([Id],[ConcurrencyStamp],[Name],[NormalizedName]) VALUES (1,NEWID(),'Admin','ADMIN');
 end
 
-if not exists (select [name] from AspNetRoles where name='Subscriber')
+if not exists (select [name] from AspNetRoles where name='Doctor')
 begin
-INSERT INTO [dbo].[AspNetRoles]([Id],[ConcurrencyStamp],[Name],[NormalizedName]) VALUES (2, NEWID(),'Subscriber','SUBSCRIBER');
+INSERT INTO [dbo].[AspNetRoles]([Id],[ConcurrencyStamp],[Name],[NormalizedName]) VALUES (2, NEWID(),'Doctor','DOCTOR');
 end
 
 --if not exists (select [name] from AspNetRoles where name='Partner')
