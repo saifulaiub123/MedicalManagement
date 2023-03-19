@@ -13,7 +13,6 @@ namespace MH.Infrastructure.Dependency
             services.AddScoped<IUserProfileImageRepository, UserProfileImageRepository>();
             services.AddScoped<IUserProfileRepository, UserProfileRepository>();
             //services.AddScoped(typeof(Domain.IRepository.IRepository<typeof(Script),int>), typeof(Repository.Repository<typeof(Script),int>));
-            services.AddScoped<IOtpRepository, OtpRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRepository<Permission, int>, Repository<Permission,int>>();
             #endregion

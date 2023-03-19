@@ -18,7 +18,6 @@ namespace MH.Infrastructure.DBContext
             this.ChangeTracker.LazyLoadingEnabled = false;
         }
 
-        public DbSet<Otp> Otps { get; set; }
         public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Permission> Permission { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)

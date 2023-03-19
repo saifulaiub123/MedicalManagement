@@ -19,7 +19,6 @@ namespace MH.Application.Dependency
             services.AddScoped<IUserProfileImageService, UserProfileImageService>();
             services.AddScoped<IUserProfileService, UserProfileService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IOtpService, OtpService>();
             services.AddScoped<ICurrentUser, CurrentUser>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPermissionService, PermissionService>();

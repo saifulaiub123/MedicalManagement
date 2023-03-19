@@ -18,7 +18,6 @@ namespace MH.Api.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<Domain.DBModel.Role> _roleManager;
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IOtpService _otpService;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
@@ -28,7 +27,6 @@ namespace MH.Api.Controllers
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<Domain.DBModel.Role> roleManager,
-            IOtpService otpService,
             IConfiguration configuration,
             IMapper mapper,
             IHttpClientFactory httpClientFactory)
@@ -37,7 +35,6 @@ namespace MH.Api.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
-            _otpService = otpService;
             _configuration = configuration;
             _mapper = mapper;
             _httpClientFactory = httpClientFactory;
