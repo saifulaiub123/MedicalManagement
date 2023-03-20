@@ -6,6 +6,7 @@ using MH.Domain.IRepository;
 using MH.Domain.Model;
 using MH.Domain.ViewModel;
 using MH.Domain.Constant;
+using Microsoft.EntityFrameworkCore;
 
 namespace MH.Application.Service
 {
@@ -24,9 +25,15 @@ namespace MH.Application.Service
         public async Task<UserViewModel> GetUserById(int id)
         {
             var user = await _userRepository.GetUserById(id);
-            var result = _mapper.Map<UserViewModel>(user);
-
-            return result;
+            var data =  new UserViewModel()
+            {
+                Id = user.Id,
+                FullName = user.FullName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                UserRoles = user.UserRoles.Select(y => y.Role.Name).ToList()
+            };
+            return data;
         }
 
         public async Task<bool> IsAdmin(int userId)

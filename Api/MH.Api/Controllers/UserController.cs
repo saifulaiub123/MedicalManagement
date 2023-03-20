@@ -51,7 +51,17 @@ namespace MH.Api.Controllers
         [Route("GetUsers")]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _userManager.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role).Where(x => x.Status == 1).ToListAsync();
+            var users = await _userManager.Users
+                .Include(x => x.UserRoles)
+                .ThenInclude(x => x.Role)
+                .Select(x => new UserViewModel {
+                    Id = x.Id,
+                    FullName = x.FullName,
+                    Email = x.Email,
+                    PhoneNumber = x.PhoneNumber,
+                    UserRoles = x.UserRoles.Select(y => y.Role.Name).ToList()
+                })
+                .ToListAsync();
             return Ok(users);
         }
         
