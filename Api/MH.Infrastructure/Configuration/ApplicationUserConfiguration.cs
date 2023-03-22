@@ -14,8 +14,6 @@ namespace MH.Infrastructure.Configuration
             builder.Property(x => x.Email)
                 .IsRequired()
                 .HasMaxLength(250);
-            builder.Property(x => x.Provider)
-               .HasMaxLength(100);
             builder.Property(x => x.PasswordHash)
                 .IsRequired();
             builder.Property(x => x.Status)

@@ -7,8 +7,6 @@ namespace MH.Domain.DBModel
     {
         
         public string FullName { get; set; }
-        public string? PictureUrl { get; set; }
-        public string? Provider { get; set; }
         public int Status { get; set; }
         public virtual ICollection<IdentityUserClaim<int>> Claims { get; set; }
         public virtual ICollection<IdentityUserLogin<int>> Logins { get; set; }
