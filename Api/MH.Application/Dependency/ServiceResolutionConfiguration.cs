@@ -24,6 +24,7 @@ namespace MH.Application.Dependency
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IMailHelper, MailHelper>();
+            services.AddScoped<IRoleService, RoleService>();
             #endregion
 
             return services;

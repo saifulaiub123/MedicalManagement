@@ -27,20 +27,15 @@ CREATE TABLE [dbo].[Log](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]  
 
 
-if not exists (select [name] from AspNetRoles where name='Admin')
+SET IDENTITY_INSERT AspNetRoles ON
+
+if not exists (select [name] from AspNetRoles where name='User')
 begin
-INSERT INTO [dbo].[AspNetRoles]([Id],[ConcurrencyStamp],[Name],[NormalizedName]) VALUES (1,NEWID(),'Admin','ADMIN');
+INSERT INTO [dbo].[AspNetRoles]([Id],[ConcurrencyStamp],[Name],[NormalizedName]) VALUES (1,NEWID(),'User','USER');
 end
 
-if not exists (select [name] from AspNetRoles where name='Doctor')
-begin
-INSERT INTO [dbo].[AspNetRoles]([Id],[ConcurrencyStamp],[Name],[NormalizedName]) VALUES (2, NEWID(),'Doctor','DOCTOR');
-end
+SET IDENTITY_INSERT AspNetRoles OFF
 
---if not exists (select [name] from AspNetRoles where name='Partner')
---begin
---INSERT INTO [dbo].[AspNetRoles]([Id],[ConcurrencyStamp],[Name],[NormalizedName]) VALUES (3, NEWID(),'Partner','PARTNER');
---end
 
 
 

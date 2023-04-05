@@ -26,7 +26,8 @@ namespace MH.Api.Authentication
             {
                 new Claim(ClaimConstant.Id, user.Id.ToString()),
                 new Claim(ClaimConstant.UserName, user.UserName),
-                new Claim(ClaimConstant.Name, ""),
+                new Claim(ClaimConstant.FirstName, user.UserProfile.FirstName),
+                new Claim(ClaimConstant.LastName, user.UserProfile.LastName),
                 new Claim(ClaimConstant.Email, user.Email ?? ""),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };

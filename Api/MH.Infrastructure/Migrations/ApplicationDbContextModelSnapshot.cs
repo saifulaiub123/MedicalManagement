@@ -127,7 +127,7 @@ namespace MH.Infrastructure.Migrations
 
                     b.HasIndex("UpdatedBy");
 
-                    b.ToTable("Permission");
+                    b.ToTable("Permission", (string)null);
                 });
 
             modelBuilder.Entity("MH.Domain.DBModel.Position", b =>
@@ -169,7 +169,7 @@ namespace MH.Infrastructure.Migrations
 
                     b.HasIndex("UpdatedBy");
 
-                    b.ToTable("Position");
+                    b.ToTable("Position", (string)null);
                 });
 
             modelBuilder.Entity("MH.Domain.DBModel.Role", b =>
@@ -285,7 +285,7 @@ namespace MH.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserProfile");
+                    b.ToTable("UserProfile", (string)null);
                 });
 
             modelBuilder.Entity("MH.Domain.DBModel.UserProfileImage", b =>
@@ -336,7 +336,7 @@ namespace MH.Infrastructure.Migrations
 
                     b.HasIndex("UserProfileId");
 
-                    b.ToTable("UserProfileImage");
+                    b.ToTable("UserProfileImage", (string)null);
                 });
 
             modelBuilder.Entity("MH.Domain.DBModel.UserRole", b =>
@@ -371,7 +371,7 @@ namespace MH.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserStatus");
+                    b.ToTable("UserStatus", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

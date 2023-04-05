@@ -12,6 +12,7 @@ namespace MH.Infrastructure.Dependency
             #region Repositories
             services.AddScoped<IPositionRepository, PositionRepository>();
             services.AddScoped<IUserProfileImageRepository, UserProfileImageRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserProfileRepository, UserProfileRepository>();
             //services.AddScoped(typeof(Domain.IRepository.IRepository<typeof(Script),int>), typeof(Repository.Repository<typeof(Script),int>));
             services.AddScoped<IUserRepository, UserRepository>();

@@ -1,7 +1,7 @@
 ﻿
-namespace MH.Domain.ViewModel
+namespace MH.Domain.Model
 {
-    public class RoleViewModel
+    public class RoleModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

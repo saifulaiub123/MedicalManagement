@@ -7,6 +7,7 @@ using MH.Api.Authentication;
 using MH.Domain.DBModel;
 using MH.Domain.Model;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace MH.Api.Controllers
 {
@@ -78,7 +79,10 @@ namespace MH.Api.Controllers
         }
         private async Task<LoginResponse?> GetLoginResult(string email)
         {
-            var existingUser = await _userManager.FindByEmailAsync(email);
+            var existingUser = await _userManager.Users
+                .Include(x => x.UserProfile)
+                .Where(x => x.Email == email)
+                .FirstOrDefaultAsync();
             if (existingUser != null)
             {
                 var userRoles = await _userManager.GetRolesAsync(existingUser);
@@ -88,7 +92,8 @@ namespace MH.Api.Controllers
                 {
                     Token = token,
                     Id = existingUser.Id,
-                    //FullName = existingUser.FullName,
+                    FirstName = existingUser.UserProfile != null ? existingUser.UserProfile.FirstName : null,
+                    LastName = existingUser.UserProfile != null ? existingUser.UserProfile.LastName : null,
                     Email = existingUser.Email,
                     Role = userRoles.ToList()
                 };
