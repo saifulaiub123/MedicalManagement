@@ -43,15 +43,15 @@ namespace MH.Infrastructure.Configuration
                .HasForeignKey<UserProfile>(z => z.UserId)
                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(x => x.CreatedByUser)
-               .WithOne(y => y.CreatedByUserProfile)
-               .HasForeignKey<UserProfile>(z => z.CreatedBy)
-               .OnDelete(DeleteBehavior.Restrict);
+            //builder.HasOne(x => x.CreatedByUser)
+            //   .WithOne(y => y.CreatedByUserProfile)
+            //   .HasForeignKey<UserProfile>(z => z.CreatedBy)
+            //   .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(x => x.UpdateByUser)
-               .WithOne(y => y.UpdatedByUserProfile)
-               .HasForeignKey<UserProfile>(z => z.UpdatedBy)
-               .OnDelete(DeleteBehavior.Restrict);
+            //builder.HasOne(x => x.UpdateByUser)
+            //   .WithOne(y => y.UpdatedByUserProfile)
+            //   .HasForeignKey<UserProfile>(z => z.UpdatedBy)
+            //   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
