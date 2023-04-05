@@ -15,7 +15,8 @@ namespace MH.Infrastructure.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -31,9 +32,6 @@ namespace MH.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FullName = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Provider = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Status = table.Column<int>(type: "int", maxLength: 10, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -53,26 +51,6 @@ namespace MH.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Otps",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MobileNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    VerificationCode = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
-                    ExpiredAt = table.Column<DateTime>(type: "datetime", maxLength: 250, nullable: false),
-                    IsVerified = table.Column<bool>(type: "bit", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    LastUpdated = table.Column<DateTime>(type: "datetime", nullable: true),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Otps", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,6 +189,37 @@ namespace MH.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Position",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedBy = table.Column<int>(type: "int", nullable: false),
+                    LastUpdated = table.Column<DateTime>(type: "datetime", nullable: true),
+                    UpdatedBy = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Position", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Position_AspNetUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Position_AspNetUsers_UpdatedBy",
+                        column: x => x.UpdatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserProfile",
                 columns: table => new
                 {
@@ -219,16 +228,16 @@ namespace MH.Infrastructure.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    CountryId = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    StateId = table.Column<int>(type: "int", nullable: false),
-                    CityId = table.Column<int>(type: "int", nullable: false),
-                    ZipCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Address1 = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    Address2 = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    LanguageId = table.Column<int>(type: "int", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: true),
+                    Gender = table.Column<int>(type: "int", nullable: true),
+                    CountryId = table.Column<int>(type: "int", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    StateId = table.Column<int>(type: "int", nullable: true),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    ZipCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address1 = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    Address2 = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    LanguageId = table.Column<int>(type: "int", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     DateCreated = table.Column<DateTime>(type: "datetime", nullable: false),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
@@ -239,50 +248,11 @@ namespace MH.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_UserProfile", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserProfile_AspNetUsers_CreatedBy",
-                        column: x => x.CreatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UserProfile_AspNetUsers_UpdatedBy",
-                        column: x => x.UpdatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_UserProfile_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserProfileImage",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Data = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    LastUpdated = table.Column<DateTime>(type: "datetime", nullable: true),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserProfileImage", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserProfileImage_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -300,6 +270,45 @@ namespace MH.Infrastructure.Migrations
                         name: "FK_UserStatus_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserProfileImage",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserProfileId = table.Column<int>(type: "int", nullable: false),
+                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Data = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedBy = table.Column<int>(type: "int", nullable: false),
+                    LastUpdated = table.Column<DateTime>(type: "datetime", nullable: true),
+                    UpdatedBy = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserProfileImage", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserProfileImage_AspNetUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserProfileImage_AspNetUsers_UpdatedBy",
+                        column: x => x.UpdatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserProfileImage_UserProfile_UserProfileId",
+                        column: x => x.UserProfileId,
+                        principalTable: "UserProfile",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -344,11 +353,6 @@ namespace MH.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Otps_MobileNumber",
-                table: "Otps",
-                column: "MobileNumber");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Permission_CreatedBy",
                 table: "Permission",
                 column: "CreatedBy");
@@ -356,6 +360,16 @@ namespace MH.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Permission_UpdatedBy",
                 table: "Permission",
+                column: "UpdatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Position_CreatedBy",
+                table: "Position",
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Position_UpdatedBy",
+                table: "Position",
                 column: "UpdatedBy");
 
             migrationBuilder.CreateIndex(
@@ -389,10 +403,19 @@ namespace MH.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserProfileImage_UserId",
+                name: "IX_UserProfileImage_CreatedBy",
                 table: "UserProfileImage",
-                column: "UserId",
-                unique: true);
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserProfileImage_UpdatedBy",
+                table: "UserProfileImage",
+                column: "UpdatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserProfileImage_UserProfileId",
+                table: "UserProfileImage",
+                column: "UserProfileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserStatus_UserId",
@@ -419,13 +442,10 @@ namespace MH.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Otps");
-
-            migrationBuilder.DropTable(
                 name: "Permission");
 
             migrationBuilder.DropTable(
-                name: "UserProfile");
+                name: "Position");
 
             migrationBuilder.DropTable(
                 name: "UserProfileImage");
@@ -435,6 +455,9 @@ namespace MH.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "UserProfile");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

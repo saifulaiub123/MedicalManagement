@@ -127,7 +127,7 @@ namespace MH.Infrastructure.Migrations
 
                     b.HasIndex("UpdatedBy");
 
-                    b.ToTable("Permission", (string)null);
+                    b.ToTable("Permission");
                 });
 
             modelBuilder.Entity("MH.Domain.DBModel.Position", b =>
@@ -169,13 +169,16 @@ namespace MH.Infrastructure.Migrations
 
                     b.HasIndex("UpdatedBy");
 
-                    b.ToTable("Position", (string)null);
+                    b.ToTable("Position");
                 });
 
             modelBuilder.Entity("MH.Domain.DBModel.Role", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -285,7 +288,7 @@ namespace MH.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserProfile", (string)null);
+                    b.ToTable("UserProfile");
                 });
 
             modelBuilder.Entity("MH.Domain.DBModel.UserProfileImage", b =>
@@ -336,7 +339,7 @@ namespace MH.Infrastructure.Migrations
 
                     b.HasIndex("UserProfileId");
 
-                    b.ToTable("UserProfileImage", (string)null);
+                    b.ToTable("UserProfileImage");
                 });
 
             modelBuilder.Entity("MH.Domain.DBModel.UserRole", b =>
@@ -371,7 +374,7 @@ namespace MH.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserStatus", (string)null);
+                    b.ToTable("UserStatus");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

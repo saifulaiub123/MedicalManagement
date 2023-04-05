@@ -57,10 +57,14 @@ namespace MH.Api.Controllers
             var existingRole = await _roleService.GetById(roleModel.Id);
             if(existingRole != null)
             {
-                existingRole.Name = roleModel.Name;
-                existingRole.NormalizedName = roleModel.Name.ToUpper();
-                existingRole.ConcurrencyStamp = DateTime.Now.ToString();
-                await _roleManager.UpdateAsync(existingRole);
+                var role = new Role()
+                {
+                    Id = existingRole.Id,
+                    Name = roleModel.Name,
+                    NormalizedName = roleModel.Name.ToUpper(),
+                    ConcurrencyStamp = existingRole.ConcurrencyStamp
+                };
+                await _roleManager.UpdateAsync(role);
                 return Ok();
             }
             
