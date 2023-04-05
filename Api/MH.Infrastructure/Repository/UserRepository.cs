@@ -37,6 +37,7 @@ namespace MH.Infrastructure.Repository
                 .Include(x => x.UserRoles)
                 .ThenInclude(x => x.Role)
                 .Include(x => x.UserProfile)
+                .Include(x => x.Position)
                 .Where(x => x.Id == id && x.Status == 1)
                 .FirstOrDefaultAsync();
         }

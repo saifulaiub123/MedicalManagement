@@ -35,6 +35,8 @@ namespace MH.Application.Service
                 LastName = user.UserProfile != null ? user.UserProfile.LastName : "",
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
+                PositionName = user.Position?.Name,
+                PositionDesc = user.Position?.Description,
                 UserRoles = user.UserRoles.Select(y => y.Role.Name).ToList()
             };
             return data;
@@ -56,6 +58,7 @@ namespace MH.Application.Service
             {
                 //exist.FullName = user.FirstName;
                 exist.PhoneNumber = user.PhoneNumber;
+                exist.PositionId = user.PositionId;
                 foreach (var existUserRole in exist.UserRoles)
                 {
                     if (!user.Roles.Any(x => x == existUserRole.RoleId))

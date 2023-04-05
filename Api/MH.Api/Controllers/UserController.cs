@@ -79,7 +79,6 @@ namespace MH.Api.Controllers
         }
         [HttpPatch]
         [Route("UpdateUser")]
-        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> UpdateUser(UserModel user)
         {
             await _userService.UpdateUser(user);
