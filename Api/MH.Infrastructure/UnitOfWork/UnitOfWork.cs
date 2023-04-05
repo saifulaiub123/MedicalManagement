@@ -21,6 +21,9 @@ namespace MH.Infrastructure.UnitOfWork
         }
         #region Repositories
 
+        private IPositionRepository _positionRepository;
+        public IPositionRepository PositionRepository => _positionRepository ?? new PositionRepository(_dbContext);
+
         private IUserProfileImageRepository _userProfileImageRepository;
         public IUserProfileImageRepository UserProfileImageRepository => _userProfileImageRepository ?? new UserProfileImageRepository(_dbContext);
 

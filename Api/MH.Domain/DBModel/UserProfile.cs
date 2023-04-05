@@ -21,9 +21,5 @@ namespace MH.Domain.DBModel
 
         public virtual ApplicationUser User { get; set; }
         public virtual UserProfileImage? UserProfileImage { get; set; }
-
-        //public virtual ApplicationUser CreatedByUser { get; set; }
-        //public virtual ApplicationUser UpdateByUser { get; set; }
-
     }
 }

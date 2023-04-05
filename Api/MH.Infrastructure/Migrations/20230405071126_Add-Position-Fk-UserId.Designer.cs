@@ -4,6 +4,7 @@ using MH.Infrastructure.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MH.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230405071126_Add-Position-Fk-UserId")]
+    partial class AddPositionFkUserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,11 +166,16 @@ namespace MH.Infrastructure.Migrations
                     b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("UpdatedBy");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Position");
                 });
@@ -493,9 +501,17 @@ namespace MH.Infrastructure.Migrations
                         .HasForeignKey("MH.Domain.DBModel.Position", "UpdatedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("MH.Domain.DBModel.ApplicationUser", "User")
+                        .WithOne("Position")
+                        .HasForeignKey("MH.Domain.DBModel.Position", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("CreatedByUser");
 
                     b.Navigation("UpdateByUser");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MH.Domain.DBModel.UserProfile", b =>
@@ -615,6 +631,9 @@ namespace MH.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Logins");
+
+                    b.Navigation("Position")
+                        .IsRequired();
 
                     b.Navigation("Tokens");
 

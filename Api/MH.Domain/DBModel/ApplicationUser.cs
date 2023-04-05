@@ -16,10 +16,11 @@ namespace MH.Domain.DBModel
         public virtual Permission? UpdatedByPermission { get; set; }
 
         public virtual UserProfile UserProfile { get; set; }
-        //public virtual UserProfile CreatedByUserProfile { get; set; }
-        //public virtual UserProfile? UpdatedByUserProfile { get; set; }
         
         public virtual UserProfileImage CreatedByUserProfileImage { get; set; }
         public virtual UserProfileImage? UpdatedByUserProfileImage { get; set; }
+
+        public virtual Position CreatedByPosition { get; set; }
+        public virtual Position? UpdatedByPosition { get; set; }
     }
 }

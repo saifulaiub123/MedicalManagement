@@ -16,6 +16,7 @@ namespace MH.Application.Dependency
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             #region Services
+            services.AddScoped<IPositionService, PositionService>();
             services.AddScoped<IUserProfileImageService, UserProfileImageService>();
             services.AddScoped<IUserProfileService, UserProfileService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

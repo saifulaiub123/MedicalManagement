@@ -7,6 +7,7 @@ namespace MH.Domain.UnitOfWork
     {
         #region Repositories
         IUserProfileImageRepository UserProfileImageRepository { get; }
+        IPositionRepository PositionRepository { get; }
         IUserProfileRepository UserProfileRepository { get; }
         #endregion
         void ClearChangeTracker();

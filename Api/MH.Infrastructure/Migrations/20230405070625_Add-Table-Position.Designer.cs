@@ -4,6 +4,7 @@ using MH.Infrastructure.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MH.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230405070625_Add-Table-Position")]
+    partial class AddTablePosition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,10 +167,6 @@ namespace MH.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("UpdatedBy");
 
                     b.ToTable("Position");
                 });
@@ -480,24 +479,6 @@ namespace MH.Infrastructure.Migrations
                     b.Navigation("UpdateByUser");
                 });
 
-            modelBuilder.Entity("MH.Domain.DBModel.Position", b =>
-                {
-                    b.HasOne("MH.Domain.DBModel.ApplicationUser", "CreatedByUser")
-                        .WithOne("CreatedByPosition")
-                        .HasForeignKey("MH.Domain.DBModel.Position", "CreatedBy")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("MH.Domain.DBModel.ApplicationUser", "UpdateByUser")
-                        .WithOne("UpdatedByPosition")
-                        .HasForeignKey("MH.Domain.DBModel.Position", "UpdatedBy")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("UpdateByUser");
-                });
-
             modelBuilder.Entity("MH.Domain.DBModel.UserProfile", b =>
                 {
                     b.HasOne("MH.Domain.DBModel.ApplicationUser", "User")
@@ -608,9 +589,6 @@ namespace MH.Infrastructure.Migrations
                     b.Navigation("CreatedByPermission")
                         .IsRequired();
 
-                    b.Navigation("CreatedByPosition")
-                        .IsRequired();
-
                     b.Navigation("CreatedByUserProfileImage")
                         .IsRequired();
 
@@ -619,8 +597,6 @@ namespace MH.Infrastructure.Migrations
                     b.Navigation("Tokens");
 
                     b.Navigation("UpdatedByPermission");
-
-                    b.Navigation("UpdatedByPosition");
 
                     b.Navigation("UpdatedByUserProfileImage");
 
