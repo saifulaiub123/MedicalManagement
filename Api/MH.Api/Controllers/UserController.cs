@@ -38,7 +38,7 @@ namespace MH.Api.Controllers
         {
             var user = new ApplicationUser()
             {
-                FullName = registerModel.FullName,
+                //FullName = registerModel.FullName,
                 Email = registerModel.Email,
                 UserName = registerModel.Email,
                 PasswordHash = registerModel.Password,
@@ -56,7 +56,7 @@ namespace MH.Api.Controllers
                 .ThenInclude(x => x.Role)
                 .Select(x => new UserViewModel {
                     Id = x.Id,
-                    FullName = x.FullName,
+                    //FullName = x.FullName,
                     Email = x.Email,
                     PhoneNumber = x.PhoneNumber,
                     UserRoles = x.UserRoles.Select(y => y.Role.Name).ToList()

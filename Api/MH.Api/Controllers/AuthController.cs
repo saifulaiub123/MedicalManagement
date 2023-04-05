@@ -46,11 +46,14 @@ namespace MH.Api.Controllers
         {
             var user = new ApplicationUser()
             {
-                FullName = registerModel.FullName,
+                //FullName = registerModel.FullName,
                 Email = registerModel.Email,
                 UserName = registerModel.Email,
                 PasswordHash = registerModel.Password,
-                Status = 1
+                Status = 1,
+                UserProfile = new UserProfile()
+                { 
+                }            
             };
             await CreateNewUser(user);
             return Ok();
@@ -83,7 +86,7 @@ namespace MH.Api.Controllers
                 {
                     Token = token,
                     Id = existingUser.Id,
-                    FullName = existingUser.FullName,
+                    //FullName = existingUser.FullName,
                     Email = existingUser.Email,
                     Role = userRoles.ToList()
                 };

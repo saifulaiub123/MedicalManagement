@@ -9,6 +9,6 @@ namespace MH.Domain.DBModel
         public string FileName { get; set; } 
         public byte[] Data { get; set; }
         public bool IsDeleted { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        //public virtual ApplicationUser User { get; set; }
     }
 }

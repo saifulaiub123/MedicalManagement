@@ -38,20 +38,20 @@ namespace MH.Application.Service
 
         public async Task<List<UserProfileViewModel>> GetAll()
         {
-            var data = await _unitOfWork.UserProfileRepository.GetAll(x => !x.IsDeleted,x=> x.User, x=> x.User.UserProfileImage);
+            var data = await _unitOfWork.UserProfileRepository.GetAll(x => !x.IsDeleted,x=> x.User);
             var result = _mapper.Map<List<UserProfileViewModel>>(data);
             return result.OrderByDescending(x=> x.DateCreated).ToList();
         }
 
         public async Task<UserProfileViewModel> GetById(int id)
         {
-            var data = await _unitOfWork.UserProfileRepository.FindBy(x => !x.IsDeleted && x.Id == id, x => x.User, x => x.User.UserProfileImage);
+            var data = await _unitOfWork.UserProfileRepository.FindBy(x => !x.IsDeleted && x.Id == id, x => x.User);
             var result = _mapper.Map<UserProfileViewModel>(data);
             return result;
         }
         public async Task<UserProfileViewModel> GetByUserId(int userId)
         {
-            var data = await _unitOfWork.UserProfileRepository.FindBy(x => !x.IsDeleted && x.UserId == userId, x => x.User, x => x.User.UserProfileImage);
+            var data = await _unitOfWork.UserProfileRepository.FindBy(x => !x.IsDeleted && x.UserId == userId, x => x.User);
             var result = _mapper.Map<UserProfileViewModel>(data);
             return result;
         }

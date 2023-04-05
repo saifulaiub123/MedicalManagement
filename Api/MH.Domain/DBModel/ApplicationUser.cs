@@ -5,8 +5,6 @@ namespace MH.Domain.DBModel
 {
     public class ApplicationUser : IdentityUser<int>
     {
-        
-        public string FullName { get; set; }
         public int Status { get; set; }
         public virtual ICollection<IdentityUserClaim<int>> Claims { get; set; }
         public virtual ICollection<IdentityUserLogin<int>> Logins { get; set; }
@@ -21,7 +19,7 @@ namespace MH.Domain.DBModel
         public virtual UserProfile CreatedByUserProfile { get; set; }
         public virtual UserProfile? UpdatedByUserProfile { get; set; }
 
-        public virtual UserProfileImage UserProfileImage { get; set; }
+        //public virtual UserProfileImage UserProfileImage { get; set; }
 
 
 

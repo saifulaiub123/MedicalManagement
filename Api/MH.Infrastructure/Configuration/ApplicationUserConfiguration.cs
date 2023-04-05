@@ -8,9 +8,6 @@ namespace MH.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
-            builder.Property(x => x.FullName)
-                .IsRequired()
-                .HasMaxLength(250);
             builder.Property(x => x.Email)
                 .IsRequired()
                 .HasMaxLength(250);

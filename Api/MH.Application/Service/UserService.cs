@@ -28,7 +28,7 @@ namespace MH.Application.Service
             var data =  new UserViewModel()
             {
                 Id = user.Id,
-                FullName = user.FullName,
+                //FullName = user.FullName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 UserRoles = user.UserRoles.Select(y => y.Role.Name).ToList()
@@ -50,7 +50,7 @@ namespace MH.Application.Service
             var exist = await _userRepository.GetUserById(user.Id);
             if (exist != null)
             {
-                exist.FullName = user.FirstName;
+                //exist.FullName = user.FirstName;
                 exist.PhoneNumber = user.PhoneNumber;
                 foreach (var existUserRole in exist.UserRoles)
                 {

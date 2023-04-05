@@ -7,10 +7,10 @@ namespace MH.Application.Validator
     {
         public RegisterModelValidator()
         {
-            RuleFor(x => x.FullName)
-                .NotNull()
-                .NotEmpty()
-                .WithMessage("Name must not be empty");
+            //RuleFor(x => x.FullName)
+            //    .NotNull()
+            //    .NotEmpty()
+            //    .WithMessage("Name must not be empty");
             RuleFor(x => x.Email)
                 .NotNull()
                 .NotEmpty()
