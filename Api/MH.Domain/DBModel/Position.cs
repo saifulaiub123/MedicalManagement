@@ -8,6 +8,7 @@ namespace MH.Domain.DBModel
         public string? Description { get; set; }
         public bool IsDeleted { get; set; }
 
+        public virtual ApplicationUser? User { get; set; }
         public virtual ApplicationUser CreatedByUser { get; set; }
         public virtual ApplicationUser UpdateByUser { get; set; }
     }

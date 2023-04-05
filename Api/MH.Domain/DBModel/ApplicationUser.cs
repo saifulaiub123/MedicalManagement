@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.Security;
 
 namespace MH.Domain.DBModel
 {
     public class ApplicationUser : IdentityUser<int>
     {
         public int Status { get; set; }
+        public int? PositionId { get; set; }
         public virtual ICollection<IdentityUserClaim<int>> Claims { get; set; }
         public virtual ICollection<IdentityUserLogin<int>> Logins { get; set; }
         public virtual ICollection<IdentityUserToken<int>> Tokens { get; set; }
@@ -20,6 +20,7 @@ namespace MH.Domain.DBModel
         public virtual UserProfileImage CreatedByUserProfileImage { get; set; }
         public virtual UserProfileImage? UpdatedByUserProfileImage { get; set; }
 
+        public virtual Position? Position { get; set; }
         public virtual Position CreatedByPosition { get; set; }
         public virtual Position? UpdatedByPosition { get; set; }
     }
