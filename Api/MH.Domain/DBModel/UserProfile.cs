@@ -20,8 +20,10 @@ namespace MH.Domain.DBModel
         public bool IsDeleted { get; set; }
 
         public virtual ApplicationUser User { get; set; }
+        public virtual UserProfileImage? UserProfileImage { get; set; }
 
         public virtual ApplicationUser CreatedByUser { get; set; }
         public virtual ApplicationUser UpdateByUser { get; set; }
+
     }
 }

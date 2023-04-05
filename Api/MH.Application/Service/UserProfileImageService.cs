@@ -36,7 +36,7 @@ namespace MH.Application.Service
             {
                 userProfileImageModel.File.CopyTo(ms);
                 userProfileImage.Data = ms.ToArray();
-                userProfileImage.UserId = (int)userProfileImageModel.UserId;
+                //userProfileImage.UserId = (int)userProfileImageModel.UserId;
                 userProfileImage.ContentType = userProfileImageModel.File.ContentType;
                 userProfileImage.FileName = userProfileImageModel.File.FileName;
                 await _unitOfWork.UserProfileImageRepository.Insert(userProfileImage);
@@ -60,7 +60,7 @@ namespace MH.Application.Service
 
         public async Task Update(UserProfileImageModel userProfileImageModel)
         {
-            var existingData = await _unitOfWork.UserProfileImageRepository.FindBy(x => x.UserId == userProfileImageModel.UserId && !x.IsDeleted);
+            var existingData = await _unitOfWork.UserProfileImageRepository.FindBy(x => x.UserProfileId == userProfileImageModel.UserId && !x.IsDeleted);
             if(existingData != null)
             {
                 using (var ms = new MemoryStream())

@@ -18,10 +18,8 @@ namespace MH.Domain.DBModel
         public virtual UserProfile UserProfile { get; set; }
         public virtual UserProfile CreatedByUserProfile { get; set; }
         public virtual UserProfile? UpdatedByUserProfile { get; set; }
-
-        //public virtual UserProfileImage UserProfileImage { get; set; }
-
-
-
+        
+        public virtual UserProfileImage CreatedByUserProfileImage { get; set; }
+        public virtual UserProfileImage? UpdatedByUserProfileImage { get; set; }
     }
 }
