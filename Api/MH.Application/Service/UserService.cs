@@ -25,10 +25,14 @@ namespace MH.Application.Service
         public async Task<UserViewModel> GetUserById(int id)
         {
             var user = await _userRepository.GetUserById(id);
+
+            if (user == null) return null;
+
             var data =  new UserViewModel()
             {
                 Id = user.Id,
-                //FullName = user.FullName,
+                FirstName = user.UserProfile != null ? user.UserProfile.FirstName : "",
+                LastName = user.UserProfile != null ? user.UserProfile.LastName : "",
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 UserRoles = user.UserRoles.Select(y => y.Role.Name).ToList()

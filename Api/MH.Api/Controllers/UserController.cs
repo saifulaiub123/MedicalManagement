@@ -12,6 +12,7 @@ using MH.Domain.IEntity;
 using AutoMapper.QueryableExtensions;
 using AutoMapper;
 using Z.EntityFramework.Plus;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace MH.Api.Controllers
 {
@@ -54,9 +55,11 @@ namespace MH.Api.Controllers
             var users = await _userManager.Users
                 .Include(x => x.UserRoles)
                 .ThenInclude(x => x.Role)
+                .Include(x=> x.UserProfile)
                 .Select(x => new UserViewModel {
                     Id = x.Id,
-                    //FullName = x.FullName,
+                    FirstName = x.UserProfile != null ? x.UserProfile.FirstName : "",
+                    LastName = x.UserProfile != null ? x.UserProfile.LastName : "",
                     Email = x.Email,
                     PhoneNumber = x.PhoneNumber,
                     UserRoles = x.UserRoles.Select(y => y.Role.Name).ToList()
@@ -70,6 +73,8 @@ namespace MH.Api.Controllers
         public async Task<IActionResult> GetUserById(int id)
         {
             var user = await _userService.GetUserById(id);
+            if (user == null) return BadRequest();
+
             return Ok(user);
         }
         [HttpPatch]

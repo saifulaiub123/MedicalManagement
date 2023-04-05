@@ -49,6 +49,7 @@ namespace MH.Api.Controllers
                 Email = registerModel.Email,
                 UserName = registerModel.Email,
                 PasswordHash = registerModel.Password,
+                PhoneNumber = registerModel.PhoneNumber,
                 Status = 1,
                 UserProfile = new UserProfile()
                 { 
