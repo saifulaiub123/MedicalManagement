@@ -17,9 +17,6 @@ namespace MH.Domain.DBModel
 
         public virtual UserProfile UserProfile { get; set; }
         
-        public virtual UserProfileImage CreatedByUserProfileImage { get; set; }
-        public virtual UserProfileImage? UpdatedByUserProfileImage { get; set; }
-
         public virtual Position? Position { get; set; }
         public virtual Position CreatedByPosition { get; set; }
         public virtual Position? UpdatedByPosition { get; set; }

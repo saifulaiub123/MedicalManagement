@@ -17,7 +17,6 @@ namespace MH.Application.Dependency
         {
             #region Services
             services.AddScoped<IPositionService, PositionService>();
-            services.AddScoped<IUserProfileImageService, UserProfileImageService>();
             services.AddScoped<IUserProfileService, UserProfileService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICurrentUser, CurrentUser>();

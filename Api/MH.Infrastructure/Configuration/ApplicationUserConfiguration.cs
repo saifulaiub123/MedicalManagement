@@ -21,7 +21,12 @@ namespace MH.Infrastructure.Configuration
                .HasMaxLength(10);
             builder.Property(x => x.PositionId)
                .IsRequired(false);
-               
+
+            builder.HasOne(x => x.Position)
+               .WithOne(y => y.User)
+               .HasForeignKey<ApplicationUser>(z => z.PositionId)
+               .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

@@ -23,10 +23,6 @@ namespace MH.Infrastructure.UnitOfWork
 
         private IPositionRepository _positionRepository;
         public IPositionRepository PositionRepository => _positionRepository ?? new PositionRepository(_dbContext);
-
-        private IUserProfileImageRepository _userProfileImageRepository;
-        public IUserProfileImageRepository UserProfileImageRepository => _userProfileImageRepository ?? new UserProfileImageRepository(_dbContext);
-
         private IUserProfileRepository _userProfileRepository;
         public IUserProfileRepository UserProfileRepository => _userProfileRepository ?? new UserProfileRepository(_dbContext);
         #endregion

@@ -6,7 +6,6 @@ namespace MH.Domain.UnitOfWork
     public interface IUnitOfWork
     {
         #region Repositories
-        IUserProfileImageRepository UserProfileImageRepository { get; }
         IPositionRepository PositionRepository { get; }
         IUserProfileRepository UserProfileRepository { get; }
         #endregion
