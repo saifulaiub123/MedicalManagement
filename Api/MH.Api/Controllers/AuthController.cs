@@ -57,7 +57,8 @@ namespace MH.Api.Controllers
                 UserProfile = new UserProfile()
                 { 
                     FirstName = registerModel.FirstName,
-                    LastName = registerModel.LastName  
+                    LastName = registerModel.LastName,
+                    IdNumber = ""
                 }            
             };
             await CreateNewUser(user);
