@@ -37,6 +37,10 @@ namespace MH.Infrastructure.Repository
                 .Include(x => x.UserRoles)
                 .ThenInclude(x => x.Role)
                 .Include(x => x.UserProfile)
+                .Include(x=> x.UserProfile.ContactDetails)
+                .Include(x=> x.UserProfile.ContactDetails.ContactDataType)
+                .Include(x=> x.UserProfile.ContactDetails.ContactType)
+                .Include(x=> x.UserProfile.ContactDetails.ContactEntity)
                 .Include(x => x.Position)
                 .Where(x => x.Id == id && x.Status == 1)
                 .FirstOrDefaultAsync();
