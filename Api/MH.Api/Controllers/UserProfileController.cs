@@ -32,6 +32,7 @@ namespace MH.Api.Controllers
 
         [HttpGet]
         [Route("GetAll")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Return Role data", typeof(List<UserProfileViewModel>))]
         public async Task<ActionResult> GetAll()
         {
             var result = await _userProfileService.GetAll();

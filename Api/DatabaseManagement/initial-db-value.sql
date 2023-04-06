@@ -37,6 +37,30 @@ end
 SET IDENTITY_INSERT AspNetRoles OFF
 
 
+--Insert Data [ContactDataType], [ContactEntity], [ContactType]
+
+INSERT [dbo].[ContactDataType] ([Id], [Name]) VALUES (1, N'Email')
+GO
+INSERT [dbo].[ContactDataType] ([Id], [Name]) VALUES (2, N'Celluar')
+GO
+INSERT [dbo].[ContactDataType] ([Id], [Name]) VALUES (3, N'Other')
+GO
+INSERT [dbo].[ContactEntity] ([Id], [Name]) VALUES (1, N'User')
+GO
+INSERT [dbo].[ContactEntity] ([Id], [Name]) VALUES (2, N'Spouse')
+GO
+INSERT [dbo].[ContactEntity] ([Id], [Name]) VALUES (3, N'NextOfKin')
+GO
+INSERT [dbo].[ContactEntity] ([Id], [Name]) VALUES (4, N'FamilyMember')
+GO
+INSERT [dbo].[ContactType] ([Id], [Name]) VALUES (1, N'Home')
+GO
+INSERT [dbo].[ContactType] ([Id], [Name]) VALUES (2, N'Work')
+GO
+INSERT [dbo].[ContactType] ([Id], [Name]) VALUES (3, N'Emergency')
+GO
+INSERT [dbo].[ContactType] ([Id], [Name]) VALUES (4, N'Other')
+GO
 
 
 --if not exists (select [name] from UserStatus where [name]='Active')

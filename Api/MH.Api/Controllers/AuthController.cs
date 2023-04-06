@@ -8,6 +8,8 @@ using MH.Domain.DBModel;
 using MH.Domain.Model;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using MH.Domain.ViewModel;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace MH.Api.Controllers
 {
@@ -64,6 +66,7 @@ namespace MH.Api.Controllers
 
         [HttpPost]
         [Route("Login")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Return Login data", typeof(LoginResponse))]
         public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {
             var result = await _signInManager.PasswordSignInAsync(loginModel.Email, loginModel.Password, true, false);

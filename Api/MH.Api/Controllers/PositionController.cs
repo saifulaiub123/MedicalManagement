@@ -56,6 +56,7 @@ namespace MH.Api.Controllers
 
         [HttpDelete]
         [Route("Delete")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<ActionResult> Delete([FromQuery] int id)
         {
             await _positionService.Delete(id);

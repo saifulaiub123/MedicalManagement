@@ -9,6 +9,7 @@ using MH.Domain.Model;
 using MH.Domain.ViewModel;
 using MH.Application.IService;
 using Microsoft.AspNetCore.Authorization;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace MH.Api.Controllers
 {
@@ -25,6 +26,7 @@ namespace MH.Api.Controllers
 
         [HttpGet]
         [Route("GetRoles")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Return Role data", typeof(List<RoleViewModel>))]
         public async Task<IActionResult> GetRoles()
         {
             var roles = (await _roleManager.Roles.ToListAsync())

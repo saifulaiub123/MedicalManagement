@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MH.Application.IService;
@@ -9,9 +8,8 @@ using MH.Domain.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using MH.Application.Enum;
 using MH.Domain.IEntity;
-using AutoMapper.QueryableExtensions;
 using AutoMapper;
-using Z.EntityFramework.Plus;
+using Swashbuckle.AspNetCore.Annotations;
 using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace MH.Api.Controllers
@@ -39,30 +37,49 @@ namespace MH.Api.Controllers
         {
             var user = new ApplicationUser()
             {
-                //FullName = registerModel.FullName,
                 Email = registerModel.Email,
                 UserName = registerModel.Email,
                 PasswordHash = registerModel.Password,
-                Status = 2
+                Status = 1
             };
             await CreateNewUser(user);
             return Ok();
         }
         [HttpGet]
         [Route("GetUsers")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Return User data", typeof(List<UserViewModel>))]
+
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userManager.Users
                 .Include(x => x.UserRoles)
                 .ThenInclude(x => x.Role)
-                .Include(x=> x.UserProfile)
-                .Select(x => new UserViewModel {
-                    Id = x.Id,
-                    FirstName = x.UserProfile != null ? x.UserProfile.FirstName : "",
-                    LastName = x.UserProfile != null ? x.UserProfile.LastName : "",
-                    Email = x.Email,
-                    PhoneNumber = x.PhoneNumber,
-                    UserRoles = x.UserRoles.Select(y => y.Role.Name).ToList()
+                .Include(x => x.UserProfile)
+                .Include(x => x.UserProfile.ContactDetails)
+                .Include(x => x.UserProfile.ContactDetails.ContactDataType)
+                .Include(x => x.UserProfile.ContactDetails.ContactType)
+                .Include(x => x.UserProfile.ContactDetails.ContactEntity)
+                .Include(x => x.Position)
+                .Select(user => new UserViewModel {
+                    Id = user.Id,
+                    FirstName = user.UserProfile != null ? user.UserProfile.FirstName : "",
+                    LastName = user.UserProfile != null ? user.UserProfile.LastName : "",
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+
+                    PositionName = user.Position.Name,
+                    PositionDesc = user.Position.Description,
+
+                    ContactName = user.UserProfile.ContactDetails.Name,
+                    ContactDataTypeId = user.UserProfile.ContactDetails.ContactDataTypeId,
+                    ContactDataTypeName = user.UserProfile.ContactDetails.ContactDataType.Name,
+                    ContactTypeId = user.UserProfile.ContactDetails.ContactTypeId,
+                    ContactTypeName = user.UserProfile.ContactDetails.ContactType.Name,
+                    ContactEntityId = user.UserProfile.ContactDetails.ContactEntityId,
+                    ContactEntityName = user.UserProfile.ContactDetails.ContactEntity.Name,
+                    ContactData = user.UserProfile.ContactDetails.Data,
+
+                    UserRoles = user.UserRoles.Select(y => y.Role.Name).ToList()
                 })
                 .ToListAsync();
             return Ok(users);
@@ -70,6 +87,7 @@ namespace MH.Api.Controllers
         
         [HttpGet]
         [Route("GetUserById")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Return User data", typeof(UserViewModel))]
         public async Task<IActionResult> GetUserById(int id)
         {
             var user = await _userService.GetUserById(id);
