@@ -20,5 +20,8 @@ namespace MH.Domain.DBModel
         public virtual Position? Position { get; set; }
         public virtual Position CreatedByPosition { get; set; }
         public virtual Position? UpdatedByPosition { get; set; }
+
+        public virtual ContactDetails CreatedByContactDetails { get; set; }
+        public virtual ContactDetails? UpdatedByContactDetails { get; set; }
     }
 }

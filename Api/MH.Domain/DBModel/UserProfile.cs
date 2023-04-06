@@ -13,5 +13,6 @@ namespace MH.Domain.DBModel
         public bool IsDeleted { get; set; }
 
         public virtual ApplicationUser User { get; set; }
+        public virtual ContactDetails ContactDetails { get; set; }
     }
 }

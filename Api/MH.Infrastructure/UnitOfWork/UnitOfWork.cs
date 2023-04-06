@@ -21,6 +21,9 @@ namespace MH.Infrastructure.UnitOfWork
         }
         #region Repositories
 
+        private IContactDetailsRepository _contactDetailsRepository;
+        public IContactDetailsRepository ContactDetailsRepository => _contactDetailsRepository ?? new ContactDetailsRepository(_dbContext);
+
         private IPositionRepository _positionRepository;
         public IPositionRepository PositionRepository => _positionRepository ?? new PositionRepository(_dbContext);
         private IUserProfileRepository _userProfileRepository;
