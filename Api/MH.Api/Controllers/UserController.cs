@@ -67,17 +67,17 @@ namespace MH.Api.Controllers
                     Email = user.Email,
                     PhoneNumber = user.PhoneNumber,
 
-                    PositionName = user.Position.Name,
-                    PositionDesc = user.Position.Description,
+                    PositionName = user.Position != null ? user.Position.Name : null,
+                    PositionDesc = user.Position != null ? user.Position.Description : null,
 
-                    ContactName = user.UserProfile.ContactDetails.Name,
-                    ContactDataTypeId = user.UserProfile.ContactDetails.ContactDataTypeId,
-                    ContactDataTypeName = user.UserProfile.ContactDetails.ContactDataType.Name,
-                    ContactTypeId = user.UserProfile.ContactDetails.ContactTypeId,
-                    ContactTypeName = user.UserProfile.ContactDetails.ContactType.Name,
-                    ContactEntityId = user.UserProfile.ContactDetails.ContactEntityId,
-                    ContactEntityName = user.UserProfile.ContactDetails.ContactEntity.Name,
-                    ContactData = user.UserProfile.ContactDetails.Data,
+                    ContactName = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.Name : null,
+                    ContactDataTypeId = user.UserProfile.ContactDetails != null? user.UserProfile.ContactDetails.ContactDataTypeId : null,
+                    ContactDataTypeName = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.Name : null,
+                    ContactTypeId = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.ContactTypeId : null,
+                    ContactTypeName = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.Name : null,
+                    ContactEntityId = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.ContactEntityId : null,
+                    ContactEntityName = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.Name : null,
+                    ContactData = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.Data : null,
 
                     UserRoles = user.UserRoles.Select(y => y.Role.Name).ToList()
                 })

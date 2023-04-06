@@ -7,6 +7,7 @@ using MH.Domain.Model;
 using MH.Domain.ViewModel;
 using MH.Domain.Constant;
 using Microsoft.EntityFrameworkCore;
+using MH.Application.Exception;
 
 namespace MH.Application.Service
 {
@@ -26,7 +27,7 @@ namespace MH.Application.Service
         {
             var user = await _userRepository.GetUserById(id);
 
-            if (user == null) return null;
+            if (user == null) throw new RecordNotFound("User id not found");
 
             var data =  new UserViewModel()
             {
@@ -39,14 +40,14 @@ namespace MH.Application.Service
                 PositionName = user.Position?.Name,
                 PositionDesc = user.Position?.Description,
 
-                ContactName = user.UserProfile.ContactDetails.Name,
-                ContactDataTypeId = user.UserProfile.ContactDetails.ContactDataTypeId,
-                ContactDataTypeName = user.UserProfile.ContactDetails.ContactDataType.Name,
-                ContactTypeId = user.UserProfile.ContactDetails.ContactTypeId,
-                ContactTypeName = user.UserProfile.ContactDetails.ContactType.Name,
-                ContactEntityId = user.UserProfile.ContactDetails.ContactEntityId,
-                ContactEntityName = user.UserProfile.ContactDetails.ContactEntity.Name,
-                ContactData = user.UserProfile.ContactDetails.Data,
+                ContactName = user.UserProfile.ContactDetails?.Name,
+                ContactDataTypeId = user.UserProfile.ContactDetails?.ContactDataTypeId,
+                ContactDataTypeName = user.UserProfile.ContactDetails?.ContactDataType.Name,
+                ContactTypeId = user.UserProfile.ContactDetails?.ContactTypeId,
+                ContactTypeName = user.UserProfile.ContactDetails?.ContactType.Name,
+                ContactEntityId = user.UserProfile.ContactDetails?.ContactEntityId,
+                ContactEntityName = user.UserProfile.ContactDetails?.ContactEntity.Name,
+                ContactData = user.UserProfile.ContactDetails?.Data,
 
                 UserRoles = user.UserRoles.Select(y => y.Role.Name).ToList()
             };
