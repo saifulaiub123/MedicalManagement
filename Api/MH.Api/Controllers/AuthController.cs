@@ -58,7 +58,6 @@ namespace MH.Api.Controllers
                 { 
                     FirstName = registerModel.FirstName,
                     LastName = registerModel.LastName,
-                    IdNumber = ""
                 }            
             };
             await CreateNewUser(user);

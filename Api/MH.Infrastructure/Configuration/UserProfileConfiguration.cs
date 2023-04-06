@@ -20,20 +20,11 @@ namespace MH.Infrastructure.Configuration
             builder.Property(x => x.LastName)
                 .HasMaxLength(250);
             builder.Property(x => x.IdNumber)
+                .HasDefaultValue("")
                 .HasMaxLength(250);
 
             builder.Property(x => x.IsDeleted)
                 .HasDefaultValue(false);
-
-            //builder.HasOne(x => x.CreatedByUser)
-            //   .WithOne(y => y.CreatedByUserProfile)
-            //   .HasForeignKey<UserProfile>(z => z.CreatedBy)
-            //   .OnDelete(DeleteBehavior.Restrict);
-
-            //builder.HasOne(x => x.UpdateByUser)
-            //   .WithOne(y => y.UpdatedByUserProfile)
-            //   .HasForeignKey<UserProfile>(z => z.UpdatedBy)
-            //   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
