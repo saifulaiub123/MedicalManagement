@@ -9,7 +9,6 @@ namespace MH.Domain.DBModel
         public string FileName { get; set; } 
         public byte[] Data { get; set; }
         public bool IsDeleted { get; set; }
-        public virtual UserProfile UserProfile { get; set; }
 
         public virtual ApplicationUser CreatedByUser { get; set; }
         public virtual ApplicationUser UpdateByUser { get; set; }

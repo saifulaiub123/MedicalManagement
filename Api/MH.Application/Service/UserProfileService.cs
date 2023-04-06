@@ -29,9 +29,9 @@ namespace MH.Application.Service
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        public async Task Add(UserProfileModel userProfile)
+        public async Task Add(UserProfileModel userProfileModel)
         {
-            var data = _mapper.Map<UserProfile>(userProfile);
+            var data = _mapper.Map<UserProfile>(userProfileModel);
             await _unitOfWork.UserProfileRepository.Insert(data);
             await _unitOfWork.CommitAsync();
         }
@@ -63,16 +63,13 @@ namespace MH.Application.Service
             {
                 existingData.FirstName = userProfile.FirstName;
                 existingData.LastName = userProfile.LastName;
-                existingData.Age = userProfile.Age;
-                existingData.CountryId = userProfile.CountryId;
-                existingData.Email = userProfile.Email;
-                existingData.StateId = userProfile.StateId;
-                existingData.CityId = userProfile.CityId;
-                existingData.ZipCode = userProfile.ZipCode;
-                existingData.Address1 = userProfile.Address1;
-                existingData.Address2 = userProfile.Address2;
-                existingData.LanguageId = userProfile.LanguageId;
-                
+                existingData.IdNumber = userProfile.IdNumber;
+                existingData.Notes = userProfile.Notes;
+                using (var ms = new MemoryStream())
+                {
+                    userProfile.File.CopyTo(ms);
+                    existingData.Photo = ms.ToArray();
+                }
                 await _unitOfWork.UserProfileRepository.Update(existingData);
                 await _unitOfWork.CommitAsync();
             }

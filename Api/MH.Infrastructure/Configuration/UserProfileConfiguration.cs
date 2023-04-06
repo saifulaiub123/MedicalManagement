@@ -10,12 +10,6 @@ namespace MH.Infrastructure.Configuration
         {
             builder.HasIndex(x => x.UserId)
               .IsUnique(false);
-            builder.HasIndex(x => x.CountryId)
-              .IsUnique(false);
-            builder.HasIndex(x => x.StateId)
-              .IsUnique(false);
-            builder.HasIndex(x => x.CityId)
-              .IsUnique(false);
             builder.HasIndex(x => x.CreatedBy)
                .IsUnique(false);
             builder.HasIndex(x => x.UpdatedBy)
@@ -25,23 +19,11 @@ namespace MH.Infrastructure.Configuration
                 .HasMaxLength(250);
             builder.Property(x => x.LastName)
                 .HasMaxLength(250);
-            builder.Property(x => x.Email)
+            builder.Property(x => x.IdNumber)
                 .HasMaxLength(250);
-            builder.Property(x => x.ZipCode)
-                .HasMaxLength(50);
-            builder.Property(x => x.Address1)
-                .HasMaxLength(300);
-            builder.Property(x => x.Address2)
-                .HasMaxLength(300);
 
             builder.Property(x => x.IsDeleted)
                 .HasDefaultValue(false);
-
-
-            builder.HasOne(x => x.User)
-               .WithOne(y => y.UserProfile)
-               .HasForeignKey<UserProfile>(z => z.UserId)
-               .OnDelete(DeleteBehavior.Restrict);
 
             //builder.HasOne(x => x.CreatedByUser)
             //   .WithOne(y => y.CreatedByUserProfile)

@@ -9,7 +9,6 @@ using MH.Domain.ViewModel;
 namespace MH.Api.Controllers
 {
     [Authorize]
-    [ApiExplorerSettings(IgnoreApi = true)]
     public class UserProfileController : BaseController
     {
         private readonly IUserProfileService _userProfileService;
@@ -23,7 +22,8 @@ namespace MH.Api.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public async Task<ActionResult> Add([FromBody] UserProfileModel model)
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public async Task<ActionResult> Add([FromForm] UserProfileModel model)
         {
             model.UserId = _currentUser.User.Id;
             await _userProfileService.Add(model);
@@ -57,7 +57,7 @@ namespace MH.Api.Controllers
 
         [HttpPatch]
         [Route("Update")]
-        public async Task<ActionResult> Update([FromBody] UserProfileModel userProfile)
+        public async Task<ActionResult> Update([FromForm] UserProfileModel userProfile)
         {
             await _userProfileService.Update(userProfile);
             return Ok();
@@ -65,6 +65,7 @@ namespace MH.Api.Controllers
 
         [HttpDelete]
         [Route("Delete")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<ActionResult> Delete([FromQuery] int id)
         {
             await _userProfileService.Delete(id);
