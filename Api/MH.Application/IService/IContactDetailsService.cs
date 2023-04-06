@@ -12,7 +12,7 @@ namespace MH.Application.IService
     public interface IContactDetailsService
     {
         Task<List<ContactDetailsViewModel>> GetAll();
-        Task<ContactDetailsViewModel> GetById(int id);
+        Task<ContactDetailsViewModel> GetByUserId(int userId);
         Task Add(ContactDetailsModel contactDetails);
         Task Update(ContactDetailsModel contactDetails);
         Task Delete(int id); 

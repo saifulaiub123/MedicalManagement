@@ -38,11 +38,11 @@ namespace MH.Api.Controllers
         }
 
         [HttpGet]
-        [Route("GetById")]
+        [Route("GetByUserId")]
         [SwaggerResponse(StatusCodes.Status200OK, "Return ContactDetails data", typeof(ContactDetailsViewModel))]
-        public async Task<ActionResult> GetById([FromQuery] int id)
+        public async Task<ActionResult> GetByUserId([FromQuery] int userId)
         {
-            var result = await _contactDetailsService.GetById(id);
+            var result = await _contactDetailsService.GetByUserId(userId);
             return Ok(result);
         }
 
@@ -56,6 +56,7 @@ namespace MH.Api.Controllers
 
         [HttpDelete]
         [Route("Delete")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<ActionResult> Delete([FromQuery] int id)
         {
             await _contactDetailsService.Delete(id);
