@@ -8,9 +8,6 @@ namespace SS.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
-            builder.HasIndex(x => x.PositionId)
-               .IsUnique(false);
-
             builder.Property(x => x.Email)
                 .IsRequired()
                 .HasMaxLength(250);
@@ -19,13 +16,6 @@ namespace SS.Infrastructure.Configuration
             builder.Property(x => x.Status)
                .IsRequired()
                .HasMaxLength(10);
-            builder.Property(x => x.PositionId)
-               .IsRequired(false);
-
-            builder.HasOne(x => x.Position)
-               .WithOne(y => y.User)
-               .HasForeignKey<ApplicationUser>(z => z.PositionId)
-               .OnDelete(DeleteBehavior.Cascade);
 
         }
     }

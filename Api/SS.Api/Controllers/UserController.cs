@@ -10,7 +10,6 @@ using SS.Application.Enum;
 using SS.Domain.IEntity;
 using AutoMapper;
 using Swashbuckle.AspNetCore.Annotations;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace SS.Api.Controllers
 {
@@ -54,31 +53,12 @@ namespace SS.Api.Controllers
             var users = await _userManager.Users
                 .Include(x => x.UserRoles)
                 .ThenInclude(x => x.Role)
-                .Include(x => x.UserProfile)
-                .Include(x => x.UserProfile.ContactDetails)
-                .Include(x => x.UserProfile.ContactDetails.ContactDataType)
-                .Include(x => x.UserProfile.ContactDetails.ContactType)
-                .Include(x => x.UserProfile.ContactDetails.ContactEntity)
-                .Include(x => x.Position)
                 .Select(user => new UserViewModel {
                     Id = user.Id,
                     FirstName = user.UserProfile != null ? user.UserProfile.FirstName : "",
                     LastName = user.UserProfile != null ? user.UserProfile.LastName : "",
                     Email = user.Email,
                     PhoneNumber = user.PhoneNumber,
-
-                    PositionName = user.Position != null ? user.Position.Name : null,
-                    PositionDesc = user.Position != null ? user.Position.Description : null,
-
-                    ContactName = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.Name : null,
-                    ContactDataTypeId = user.UserProfile.ContactDetails != null? user.UserProfile.ContactDetails.ContactDataTypeId : null,
-                    ContactDataTypeName = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.Name : null,
-                    ContactTypeId = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.ContactTypeId : null,
-                    ContactTypeName = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.Name : null,
-                    ContactEntityId = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.ContactEntityId : null,
-                    ContactEntityName = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.Name : null,
-                    ContactData = user.UserProfile.ContactDetails != null ? user.UserProfile.ContactDetails.Data : null,
-
                     UserRoles = user.UserRoles.Select(y => y.Role.Name).ToList()
                 })
                 .ToListAsync();

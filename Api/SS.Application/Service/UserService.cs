@@ -36,19 +36,6 @@ namespace SS.Application.Service
                 LastName = user.UserProfile != null ? user.UserProfile.LastName : "",
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-
-                PositionName = user.Position?.Name,
-                PositionDesc = user.Position?.Description,
-
-                ContactName = user.UserProfile.ContactDetails?.Name,
-                ContactDataTypeId = user.UserProfile.ContactDetails?.ContactDataTypeId,
-                ContactDataTypeName = user.UserProfile.ContactDetails?.ContactDataType.Name,
-                ContactTypeId = user.UserProfile.ContactDetails?.ContactTypeId,
-                ContactTypeName = user.UserProfile.ContactDetails?.ContactType.Name,
-                ContactEntityId = user.UserProfile.ContactDetails?.ContactEntityId,
-                ContactEntityName = user.UserProfile.ContactDetails?.ContactEntity.Name,
-                ContactData = user.UserProfile.ContactDetails?.Data,
-
                 UserRoles = user.UserRoles.Select(y => y.Role.Name).ToList()
             };
             return data;
@@ -69,7 +56,6 @@ namespace SS.Application.Service
             if (exist != null)
             {
                 exist.PhoneNumber = user.PhoneNumber;
-                exist.PositionId = user.PositionId;
                 foreach (var existUserRole in exist.UserRoles)
                 {
                     if (!user.Roles.Any(x => x == existUserRole.RoleId))

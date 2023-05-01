@@ -6,8 +6,6 @@ namespace SS.Domain.UnitOfWork
     public interface IUnitOfWork
     {
         #region Repositories
-        IPositionRepository PositionRepository { get; }
-        IContactDetailsRepository ContactDetailsRepository { get; }
         IUserProfileRepository UserProfileRepository { get; }
         #endregion
         void ClearChangeTracker();

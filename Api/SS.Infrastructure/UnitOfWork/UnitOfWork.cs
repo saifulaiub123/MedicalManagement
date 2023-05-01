@@ -20,12 +20,6 @@ namespace SS.Infrastructure.UnitOfWork
             _dbContext = dbContext;
         }
         #region Repositories
-
-        private IContactDetailsRepository _contactDetailsRepository;
-        public IContactDetailsRepository ContactDetailsRepository => _contactDetailsRepository ?? new ContactDetailsRepository(_dbContext);
-
-        private IPositionRepository _positionRepository;
-        public IPositionRepository PositionRepository => _positionRepository ?? new PositionRepository(_dbContext);
         private IUserProfileRepository _userProfileRepository;
         public IUserProfileRepository UserProfileRepository => _userProfileRepository ?? new UserProfileRepository(_dbContext);
         #endregion
