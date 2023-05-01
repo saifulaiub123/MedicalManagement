@@ -21,7 +21,7 @@ namespace SS.Api.Controllers
         private readonly IUserService _userService;
         private readonly ICurrentUser _currentUser;
         private readonly IMapper _mapper;
-        public UserController(UserManager<ApplicationUser> userManager, RoleManager<Role> roleManager, IUserService userService, ICurrentUser currentUser = null, IMapper mapper = null)
+        public UserController(UserManager<ApplicationUser> userManager, RoleManager<Role> roleManager, IUserService userService, ICurrentUser currentUser, IMapper mapper)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -34,6 +34,10 @@ namespace SS.Api.Controllers
         [Route("Add")]
         public async Task<IActionResult> Add(RegisterModel registerModel)
         {
+            if (!await _userService.CanViewOrEdit(_currentUser.User.Id))
+            {
+                return Forbid();
+            }
             var user = new ApplicationUser()
             {
                 Email = registerModel.Email,
@@ -50,6 +54,10 @@ namespace SS.Api.Controllers
 
         public async Task<IActionResult> GetUsers()
         {
+            if (!await _userService.CanViewOrEdit(_currentUser.User.Id))
+            {
+                return Forbid();
+            }
             var users = await _userManager.Users
                 .Include(x => x.UserRoles)
                 .ThenInclude(x => x.Role)
@@ -70,6 +78,10 @@ namespace SS.Api.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Return User data", typeof(UserViewModel))]
         public async Task<IActionResult> GetUserById(int id)
         {
+            if (!await _userService.CanViewOrEdit(id))
+            {
+                return Forbid();
+            }
             var user = await _userService.GetUserById(id);
             if (user == null) return BadRequest();
 
@@ -79,6 +91,10 @@ namespace SS.Api.Controllers
         [Route("UpdateUser")]
         public async Task<IActionResult> UpdateUser(UserModel user)
         {
+            if (!await _userService.CanViewOrEdit(user.Id))
+            {
+                return Forbid();
+            }
             await _userService.UpdateUser(user);
             return Ok();
         }
@@ -87,30 +103,49 @@ namespace SS.Api.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> Delete(int id)
         {
+            if (!await _userService.CanViewOrEdit(id))
+            {
+                return Forbid();
+            }
             await _userService.Delete(id);
             return Ok();
         }
         [HttpPatch]
         [Route("ChangePassword")]
-        [ApiExplorerSettings(IgnoreApi = true)]
+        [ApiExplorerSettings(IgnoreApi = false)]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
         {
+            if (!await _userService.CanViewOrEdit(_currentUser.User.Id))
+            {
+                return Forbid();
+            }
             var user = await _userManager.FindByIdAsync(_currentUser.User.Id.ToString());
-            await _userManager.ChangePasswordAsync(user, changePasswordModel.CurrentPassword, changePasswordModel.NewPassword);
-            return Ok();
+            var result = await _userManager.ChangePasswordAsync(user, changePasswordModel.CurrentPassword, changePasswordModel.NewPassword);
+            if(result.Succeeded) return Ok();
+
+            return BadRequest(result.Errors.FirstOrDefault());
+
         }
         [HttpPatch]
         [Route("ResetPassword")]
         [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
         {
+            if (!await _userService.CanViewOrEdit(_currentUser.User.Id))
+            {
+                return Forbid();
+            }
             var user = await _userManager.FindByIdAsync(_currentUser.User.Id.ToString());
             await _userManager.ChangePasswordAsync(user, resetPasswordModel.CurrentPassword, resetPasswordModel.NewPassword);
             return Ok();
         }
 
-        private async Task CreateNewUser(ApplicationUser user)
+        private async Task<IActionResult> CreateNewUser(ApplicationUser user)
         {
+            if (!await _userService.CanViewOrEdit(_currentUser.User.Id))
+            {
+                return Forbid();
+            }
             var result = await _userManager.CreateAsync(user, user.PasswordHash);
             if (!result.Succeeded)
             {
@@ -118,6 +153,8 @@ namespace SS.Api.Controllers
                 throw new Exception(errors.ToString());
             }
             await _userManager.AddToRoleAsync(user, RoleEnum.User.ToString());
+
+            return Ok();
         }
     }
 }

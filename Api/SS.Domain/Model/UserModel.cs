@@ -7,7 +7,6 @@ namespace SS.Domain.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string? PhoneNumber { get; set; }
-        public int? PositionId { get; set; }
         public List<int> Roles { get; set; }
     }
 }

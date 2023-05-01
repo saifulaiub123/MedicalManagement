@@ -10,6 +10,7 @@ using SS.Domain.ViewModel;
 using SS.Application.IService;
 using Microsoft.AspNetCore.Authorization;
 using Swashbuckle.AspNetCore.Annotations;
+using SS.Domain.IEntity;
 
 namespace SS.Api.Controllers
 {
@@ -18,10 +19,14 @@ namespace SS.Api.Controllers
     {
         private readonly RoleManager<Domain.DBModel.Role> _roleManager;
         private readonly IRoleService _roleService;
-        public RoleController(RoleManager<Domain.DBModel.Role> roleManager, IRoleService roleService)
+        private readonly IUserService _userService;
+        private readonly ICurrentUser _currentUser;
+        public RoleController(RoleManager<Domain.DBModel.Role> roleManager, IRoleService roleService, IUserService userService, ICurrentUser currentUser)
         {
             _roleManager = roleManager;
             _roleService = roleService;
+            _userService = userService;
+            _currentUser = currentUser;
         }
 
         [HttpGet]
@@ -42,6 +47,10 @@ namespace SS.Api.Controllers
         [Route("Add")]
         public async Task<IActionResult> Add([FromBody] RoleModel roleModel)
         {
+            if(!await _userService.CanViewOrEdit(_currentUser.User.Id))
+            {
+                return Forbid();
+            }
             var role = new Role()
             {
                 Name = roleModel.Name,
@@ -54,6 +63,7 @@ namespace SS.Api.Controllers
         
         [HttpPatch]
         [Route("Update")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> Update([FromBody] RoleModel roleModel)
         {
             var existingRole = await _roleService.GetById(roleModel.Id);

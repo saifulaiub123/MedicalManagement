@@ -8,6 +8,7 @@ using SS.Domain.ViewModel;
 using SS.Domain.Constant;
 using Microsoft.EntityFrameworkCore;
 using SS.Application.Exception;
+using SS.Domain.IEntity;
 
 namespace SS.Application.Service
 {
@@ -15,12 +16,14 @@ namespace SS.Application.Service
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserRepository _userRepository;
+        private readonly ICurrentUser _currentUser;
         private readonly IMapper _mapper;
-        public UserService(IUserRepository userRepository, IMapper mapper, UserManager<ApplicationUser> userManager)
+        public UserService(IUserRepository userRepository, IMapper mapper, UserManager<ApplicationUser> userManager, ICurrentUser currentUser)
         {
             _userManager = userManager;
             _userRepository = userRepository;
             _mapper = mapper;
+            _currentUser = currentUser;
         }
 
         public async Task<UserViewModel> GetUserById(int id)
@@ -46,6 +49,16 @@ namespace SS.Application.Service
             var user = await _userManager.FindByIdAsync(userId.ToString());
             var isAdmin = (await _userManager.GetRolesAsync(user)).Where(x => x == RoleConst.ADMIN).FirstOrDefault();
             if (isAdmin != null) return true;
+
+            return false;
+        }
+        public async Task<bool> CanViewOrEdit(int userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var isAdmin = (await _userManager.GetRolesAsync(user)).Where(x => x == RoleConst.ADMIN).FirstOrDefault();
+            if (isAdmin != null) return true;
+
+            if(userId == _currentUser.User.Id) return true;
 
             return false;
         }

@@ -160,66 +160,6 @@ namespace SS.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Permission",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    LastUpdated = table.Column<DateTime>(type: "datetime", nullable: true),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Permission", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Permission_AspNetUsers_CreatedBy",
-                        column: x => x.CreatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Permission_AspNetUsers_UpdatedBy",
-                        column: x => x.UpdatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Position",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    LastUpdated = table.Column<DateTime>(type: "datetime", nullable: true),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Position", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Position_AspNetUsers_CreatedBy",
-                        column: x => x.CreatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Position_AspNetUsers_UpdatedBy",
-                        column: x => x.UpdatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserProfile",
                 columns: table => new
                 {
@@ -228,16 +168,9 @@ namespace SS.Infrastructure.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: true),
-                    Gender = table.Column<int>(type: "int", nullable: true),
-                    CountryId = table.Column<int>(type: "int", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
-                    StateId = table.Column<int>(type: "int", nullable: true),
-                    CityId = table.Column<int>(type: "int", nullable: true),
-                    ZipCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Address1 = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
-                    Address2 = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
-                    LanguageId = table.Column<int>(type: "int", nullable: true),
+                    IdNumber = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false, defaultValue: ""),
+                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     DateCreated = table.Column<DateTime>(type: "datetime", nullable: false),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
@@ -252,7 +185,7 @@ namespace SS.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -270,45 +203,6 @@ namespace SS.Infrastructure.Migrations
                         name: "FK_UserStatus_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserProfileImage",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserProfileId = table.Column<int>(type: "int", nullable: false),
-                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Data = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    LastUpdated = table.Column<DateTime>(type: "datetime", nullable: true),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserProfileImage", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserProfileImage_AspNetUsers_CreatedBy",
-                        column: x => x.CreatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UserProfileImage_AspNetUsers_UpdatedBy",
-                        column: x => x.UpdatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UserProfileImage_UserProfile_UserProfileId",
-                        column: x => x.UserProfileId,
-                        principalTable: "UserProfile",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -353,44 +247,9 @@ namespace SS.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Permission_CreatedBy",
-                table: "Permission",
-                column: "CreatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Permission_UpdatedBy",
-                table: "Permission",
-                column: "UpdatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Position_CreatedBy",
-                table: "Position",
-                column: "CreatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Position_UpdatedBy",
-                table: "Position",
-                column: "UpdatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserProfile_CityId",
-                table: "UserProfile",
-                column: "CityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserProfile_CountryId",
-                table: "UserProfile",
-                column: "CountryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserProfile_CreatedBy",
                 table: "UserProfile",
                 column: "CreatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserProfile_StateId",
-                table: "UserProfile",
-                column: "StateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfile_UpdatedBy",
@@ -401,21 +260,6 @@ namespace SS.Infrastructure.Migrations
                 name: "IX_UserProfile_UserId",
                 table: "UserProfile",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserProfileImage_CreatedBy",
-                table: "UserProfileImage",
-                column: "CreatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserProfileImage_UpdatedBy",
-                table: "UserProfileImage",
-                column: "UpdatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserProfileImage_UserProfileId",
-                table: "UserProfileImage",
-                column: "UserProfileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserStatus_UserId",
@@ -442,22 +286,13 @@ namespace SS.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Permission");
-
-            migrationBuilder.DropTable(
-                name: "Position");
-
-            migrationBuilder.DropTable(
-                name: "UserProfileImage");
+                name: "UserProfile");
 
             migrationBuilder.DropTable(
                 name: "UserStatus");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "UserProfile");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

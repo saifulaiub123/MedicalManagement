@@ -32,6 +32,7 @@ namespace SS.Api.Controllers
 
         [HttpGet]
         [Route("GetAll")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [SwaggerResponse(StatusCodes.Status200OK, "Return Role data", typeof(List<UserProfileViewModel>))]
         public async Task<ActionResult> GetAll()
         {
@@ -41,6 +42,7 @@ namespace SS.Api.Controllers
 
         [HttpGet]
         [Route("GetById")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [SwaggerResponse(StatusCodes.Status200OK, "", typeof(UserProfileViewModel))]
         public async Task<ActionResult> GetById([FromQuery] int id)
         {
@@ -49,6 +51,7 @@ namespace SS.Api.Controllers
         }
         [HttpGet]
         [Route("GetByUserId")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [SwaggerResponse(StatusCodes.Status200OK, "", typeof(UserProfileViewModel))]
         public async Task<ActionResult> GetByUserId()
         {
@@ -58,6 +61,7 @@ namespace SS.Api.Controllers
 
         [HttpPatch]
         [Route("Update")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<ActionResult> Update([FromForm] UserProfileModel userProfile)
         {
             await _userProfileService.Update(userProfile);
