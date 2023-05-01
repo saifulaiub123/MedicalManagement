@@ -116,8 +116,10 @@ namespace MH.Api.Controllers
         public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
         {
             var user = await _userManager.FindByIdAsync(_currentUser.User.Id.ToString());
-            await _userManager.ChangePasswordAsync(user, changePasswordModel.CurrentPassword, changePasswordModel.NewPassword);
-            return Ok();
+            var result = await _userManager.ChangePasswordAsync(user, changePasswordModel.CurrentPassword, changePasswordModel.NewPassword);
+            if (result.Succeeded) return Ok();
+
+            return BadRequest(result.Errors.FirstOrDefault());
         }
         [HttpPatch]
         [Route("ResetPassword")]
